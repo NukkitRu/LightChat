@@ -1,0 +1,9 @@
+# Here displayed the person who has muted the player #
+mutedBy:
+  Notch: "admin"
+  Herobrine: "admin"
+
+# List of muted players #
+mutedPlayers:
+  - Notch
+  - Herobrine

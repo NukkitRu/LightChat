@@ -1,0 +1,27 @@
+name: xChat
+main: ru.undefined1.xChat.xKernel
+version: "0.2b"
+author: undefined1
+api: ["1.0.0"]
+softdepend: [LeetPerms, Multipass]
+
+commands:
+  xChat:
+    usage: "/xchat"
+  mute:
+    usage: "/mute <playername>"
+  unmute:
+    usage: "/unmute <playername>"
+
+permissions:
+  xChat.*:
+    description: "Give all xChat permissions"
+    children:
+      xChat.admin: true
+      xChat.mute: true
+  xChat.mute:
+    description: "Access for muting players"
+    default: op
+  xChat.admin:
+    description: "Access to xChat commands"
+    default: op

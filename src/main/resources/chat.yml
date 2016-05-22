@@ -1,0 +1,13 @@
+# Here you can customize player chat messages #
+# Available Tags: <message>, <player>, <time>, <world>, <level>, <prefix> #
+format: "&8[<prefix>&8] &7<player>&f: <message>"
+default-prefix: "&2Player"
+
+###################
+# W.I.P FUNCTIONS #
+###################
+
+# Here you can make special chat formatting for different groups #
+# Available Tags: <message>, <player>, <time>, <world>, <level>, <prefix> #
+# Working only with Multipass #
+admins: "&2[<prefix>&2] &c<player>&e: <message>"
