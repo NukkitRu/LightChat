@@ -1,6 +1,6 @@
 name: xChat
-main: ru.undefined1.xChat.xKernel
-version: "0.2b"
+main: ru.undefined1.xChat.xChat
+version: "0.3b"
 author: undefined1
 api: ["1.0.0"]
 softdepend: [LeetPerms, Multipass]

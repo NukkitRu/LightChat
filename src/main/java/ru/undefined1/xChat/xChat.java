@@ -1,36 +1,20 @@
 package ru.undefined1.xChat;
 
-
-import cc.leet.leetperms.LeetPerms;
-import cc.leet.leetperms.util.DataManager;
-import cc.leet.leetperms.util.PermissionAPI;
-import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import ru.nukkit.multipass.Multipass;
-import ru.nukkit.multipass.MultipassPlugin;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by ryzhe on 19.05.2016.
- */
-public class xKernel extends PluginBase implements Listener {
+public class xChat extends PluginBase implements Listener {
 
-    private static xKernel instance;
+    private static xChat instance;
 
-    public static xKernel getPlugin() {
+    public static xChat getPlugin() {
         return instance;
     }
 
@@ -42,8 +26,6 @@ public class xKernel extends PluginBase implements Listener {
 
     private File muted;
     public static Config mute;
-
-    public static Boolean LeetPermsEnabled;
 
     public String getTranslation(String message) {
         return config.getString(TextFormat.colorize(message));
@@ -78,10 +60,6 @@ public class xKernel extends PluginBase implements Listener {
         }
     }
 
-    private void sendChatMessage(String message) {
-        getServer().getConsoleSender().sendMessage(TextFormat.colorize(message));
-    }
-
     private void sendChatMessage(String prefix, String message) {
         getServer().getConsoleSender().sendMessage(TextFormat.colorize("&8[" + prefix + "&8] &7" + message));
     }
@@ -89,10 +67,6 @@ public class xKernel extends PluginBase implements Listener {
     private void loadData() {
         this.getDataFolder().mkdirs();
         this.saveDefaultConfig();
-
-
-
-
 
         this.saveResource("chat.yml", false);
         this.saveResource("mute.yml", false);
@@ -109,8 +83,6 @@ public class xKernel extends PluginBase implements Listener {
 
         sendChatMessage("&dxChat", "&aDeveloped by: &eundefined1");
         sendChatMessage("&dxChat", "&aThanks for downloading!");
-
-
     }
 
     @Override
@@ -125,23 +97,13 @@ public class xKernel extends PluginBase implements Listener {
         this.loadData();
 
             if(getServer().getPluginManager().getPlugin("Multipass").isEnabled()) {
-
                 sendChatMessage("&bPrefixManager", "Copying player prefixes from: &bMultipass");
-                LeetPermsEnabled = false;
-
             } else if(getServer().getPluginManager().getPlugin("LeetPerms").isEnabled()) {
-
                 sendChatMessage("&bPrefixManager", "Copying player prefixes from: &bLeetPerms");
-                LeetPermsEnabled = true;
-
             } else {
-
                 sendChatMessage("&bPrefixManager", "[WARNING] Install &eLeetPerms &ror &eMultipass&r!");
-
             }
-        this.getServer().getPluginManager().registerEvents(new xChatManagement(this), this);
-
-
+        this.getServer().getPluginManager().registerEvents(new xListener(this), this);
     }
 
     @Override
@@ -153,14 +115,26 @@ public class xKernel extends PluginBase implements Listener {
 
                     s.sendMessage(TextFormat.colorize("&8[&dxChat&8] &8Made by &eundefined1"));
                     s.sendMessage(TextFormat.colorize("&aType &7/xChat help &ato call help menu"));
-                    s.sendMessage(TextFormat.colorize("&aPrefix Manager selected as &e" + config.getString("PrefixManager")));
 
                 } else if (args[0].equalsIgnoreCase("help")) {
 
                     s.sendMessage(TextFormat.colorize("&7- &d/xChat reload &8- Reload all configurations."));
                     s.sendMessage(TextFormat.colorize("&7- &d/xChat format &8- Edit chat formatting."));
 
-                //} else if (args[0].equalsIgnoreCase("format")) {
+                } else if (args[0].equalsIgnoreCase("format")) {
+                    if(args.length == 1) {
+                        s.sendMessage(TextFormat.colorize("&7- &d/xChat format <format> <group>"));
+                    } else if(args.length == 2) {
+                        chat.set("format", args[1]);
+                        chat.save();
+                        chat.reload();
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.FORMAT")));
+                    } else {
+                        chat.set(args[1], args[2].replaceAll("_", " "));
+                        chat.save();
+                        chat.reload();
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.GROUP-FORMAT").replaceAll("<group>", args[1])));
+                    }
 
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     config.reload();
@@ -173,55 +147,24 @@ public class xKernel extends PluginBase implements Listener {
             List muted = mute.getList("mutedPlayers");
             if(s.hasPermission("xChat.mute")) {
                 if (args.length == 0) {
-
                     s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.MUTE-DESC")));
-
                 } else {
-
                     if (!muted.contains(args[0])) {
-
-
                         mute.set("mutedBy." + args[0], s.getName());
                         muted.add(args[0]);
-
                         s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.MUTE")).replaceAll("<target>", args[0]));
                         getServer().broadcastMessage(TextFormat.colorize(getTranslation("commands.MUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
-
-                    } else {
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.ALREADY-MUTED")).replaceAll("<target>", args[0]));
-                    }
-                    mute.save();
-                    mute.reload();
-                }
-            }
-
-        } else if(cmdLabel.equalsIgnoreCase("unmute")) {
-            if(s.hasPermission("xChat.mute")) {
-                List muted = mute.getList("mutedPlayers");
-                if (args.length == 0) {
-
-                    s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.UNMUTE-DESC")));
-
-                } else {
-
-                    if (muted.contains(args[0])) {
-
-
+                    } else if (muted.contains(args[0])) {
                         mute.remove("mutedBy." + args[0]);
                         muted.remove(args[0]);
-
                         s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.UNMUTE")).replaceAll("<target>", args[0]));
                         getServer().broadcastMessage(TextFormat.colorize(getTranslation("commands.UNMUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
-
-                    } else {
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.UNALREADY-MUTED")).replaceAll("<target>", args[0]));
                     }
                     mute.save();
                     mute.reload();
                 }
             }
         }
-
         return true;
     }
 

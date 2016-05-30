@@ -3,14 +3,13 @@ CmdPrefix: "&8[&dxChat&8]"
 
 # Messages List #
 commands:
-  RELOAD: "&aConfiguration files reloaded."
-  MUTE: "&7You mute &6'<target>'"
-  MUTE-ANNOUNCE: "&7Player &c'<target>' &7has muted by &a'<player>'"
-  ALREADY-MUTED: "&cYou already mute &6'<target>'"
-  MUTE-DESC: "&aError in command syntax, use &e/mute <playername>"
-  UNMUTE: "&7You unmute &6'<target>'"
-  UNMUTE-ANNOUNCE: "&7Player &a'<target>' &7has unmuted by &a'<player>'"
-  UNALREADY-MUTED: "&cPlayer &6'<target>' &cnot muted."
-  UNMUTE-DESC: "&aError in command syntax, use &e/unmute <playername>"
+  RELOAD: "&dConfiguration files reloaded."
+  MUTE: "&7You mute &d'<target>'"
+  MUTE-ANNOUNCE: "&7Player &d'<target>' &7has muted by &d'<player>'"
+  MUTE-DESC: "&7Error in command syntax, use &d/mute <playername>"
+  UNMUTE: "&7You unmute &d'<target>'"
+  UNMUTE-ANNOUNCE: "&7Player &d'<target>' &7has unmuted by &d'<player>'"
+  FORMAT: "&dYou successful updated default chat formatting!"
+  GROUP-FORMAT: "&7You set chat formatting for &d'<group>'"
 chat:
-  MUTED: "&cYou are muted by &e'%mutedBy%'"
+  MUTED: "&cYou are muted by &d'%mutedBy%'"
