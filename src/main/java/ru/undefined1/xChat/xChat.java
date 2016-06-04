@@ -27,12 +27,15 @@ public class xChat extends PluginBase implements Listener {
     private File muted;
     public static Config mute;
 
+    private File Tags;
+    public static Config tags;
+
     public String getTranslation(String message) {
         return config.getString(TextFormat.colorize(message));
     }
 
     public String getPrefixTranslation(String message) {
-            String prefix = config.getString("CmdPrefix");
+            String prefix = config.getString("global.prefix");
             return prefix + " " + config.getString(TextFormat.colorize(message));
     }
 
@@ -60,8 +63,8 @@ public class xChat extends PluginBase implements Listener {
         }
     }
 
-    private void sendChatMessage(String prefix, String message) {
-        getServer().getConsoleSender().sendMessage(TextFormat.colorize("&8[" + prefix + "&8] &7" + message));
+    private void sendChatMessage(String message) {
+        getServer().getConsoleSender().sendMessage(TextFormat.colorize("&8[&bxChat&8] &7" + message));
     }
 
     private void loadData() {
@@ -81,8 +84,10 @@ public class xChat extends PluginBase implements Listener {
         this.muted = new File(this.getDataFolder(), "mute.yml");
         mute = new Config(this.muted, 2);
 
-        sendChatMessage("&dxChat", "&aDeveloped by: &eundefined1");
-        sendChatMessage("&dxChat", "&aThanks for downloading!");
+        this.Tags = new File(this.getDataFolder(), "config.yml");
+        tags = new Config(this.Tags, 2);
+
+        sendChatMessage("&7######### &bxChat &7by &eimpact &7###########");
     }
 
     @Override
@@ -90,19 +95,28 @@ public class xChat extends PluginBase implements Listener {
         instance = this;
     }
 
-
     @Override
     public void onEnable() {
 
         this.loadData();
 
-            if(getServer().getPluginManager().getPlugin("Multipass").isEnabled()) {
-                sendChatMessage("&bPrefixManager", "Copying player prefixes from: &bMultipass");
-            } else if(getServer().getPluginManager().getPlugin("LeetPerms").isEnabled()) {
-                sendChatMessage("&bPrefixManager", "Copying player prefixes from: &bLeetPerms");
-            } else {
-                sendChatMessage("&bPrefixManager", "[WARNING] Install &eLeetPerms &ror &eMultipass&r!");
-            }
+        if(getServer().getPluginManager().getPlugin("Multipass") != null) {
+            sendChatMessage("&e* Associated with &aMultipass");
+            getServer().getPluginManager().enablePlugin(getServer().getPluginManager().getPlugin("xChat"));
+        } else {
+            sendChatMessage("&c* You don't have a Multipass plugin! Install it from &enukkit.ru");
+            getServer().getPluginManager().disablePlugin(getServer().getPluginManager().getPlugin("xChat"));
+        }
+
+        if(getServer().getPluginManager().getPlugin("xClans") != null) {
+            sendChatMessage("&e* Associated with &axClans");
+        }
+
+        if(getServer().getPluginManager().getPlugin("CraftWallet") != null) {
+            sendChatMessage("&e* Associated with &aCraftWallet");
+        }
+
+
         this.getServer().getPluginManager().registerEvents(new xListener(this), this);
     }
 
@@ -128,37 +142,37 @@ public class xChat extends PluginBase implements Listener {
                         chat.set("format", args[1]);
                         chat.save();
                         chat.reload();
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.FORMAT")));
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.FORMAT")));
                     } else {
                         chat.set(args[1], args[2].replaceAll("_", " "));
                         chat.save();
                         chat.reload();
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.GROUP-FORMAT").replaceAll("<group>", args[1])));
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.GROUP-FORMAT").replaceAll("<group>", args[1])));
                     }
 
                 } else if (args[0].equalsIgnoreCase("reload")) {
                     config.reload();
                     mute.reload();
                     chat.reload();
-                    s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.RELOAD")));
+                    s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.RELOAD")));
                 }
             }
         } else if(cmdLabel.equalsIgnoreCase("mute")) {
             List muted = mute.getList("mutedPlayers");
             if(s.hasPermission("xChat.mute")) {
                 if (args.length == 0) {
-                    s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.MUTE-DESC")));
+                    s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.MUTE-DESC")));
                 } else {
                     if (!muted.contains(args[0])) {
                         mute.set("mutedBy." + args[0], s.getName());
                         muted.add(args[0]);
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.MUTE")).replaceAll("<target>", args[0]));
-                        getServer().broadcastMessage(TextFormat.colorize(getTranslation("commands.MUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.MUTE")).replaceAll("<target>", args[0]));
+                        getServer().broadcastMessage(TextFormat.colorize(getTranslation("messages.MUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
                     } else if (muted.contains(args[0])) {
                         mute.remove("mutedBy." + args[0]);
                         muted.remove(args[0]);
-                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("commands.UNMUTE")).replaceAll("<target>", args[0]));
-                        getServer().broadcastMessage(TextFormat.colorize(getTranslation("commands.UNMUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
+                        s.sendMessage(TextFormat.colorize(getPrefixTranslation("messages.UNMUTE")).replaceAll("<target>", args[0]));
+                        getServer().broadcastMessage(TextFormat.colorize(getTranslation("messages.UNMUTE-ANNOUNCE")).replaceAll("<target>", args[0]).replaceAll("<player>", s.getName()));
                     }
                     mute.save();
                     mute.reload();
