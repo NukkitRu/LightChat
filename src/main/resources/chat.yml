@@ -1,5 +1,8 @@
+# xChat developed by impact #
+
 # Here you can customize player chat messages #
 # Available Tags: <message>, <player>, <time>, <world>, <level>, <prefix> #
+# If you have CraftWallet plugin on server, you can use <money> to get player balance #
 # If you have xClans plugin on server, you can use <clan> to get clan name #
 format: "&8[<prefix>&8] &7<player>&f: <message>"
 

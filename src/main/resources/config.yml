@@ -1,8 +1,10 @@
+# xChat developed by impact #
 # This prefix will appear when performing one of teams of a plugin #
-CmdPrefix: "&8[&dxChat&8]"
+global:
+  prefix: "&7[&bxChat&7]"
 
 # Messages List #
-commands:
+messages:
   RELOAD: "&dConfiguration files reloaded."
   MUTE: "&7You mute &d'<target>'"
   MUTE-ANNOUNCE: "&7Player &d'<target>' &7has muted by &d'<player>'"
@@ -11,5 +13,5 @@ commands:
   UNMUTE-ANNOUNCE: "&7Player &d'<target>' &7has unmuted by &d'<player>'"
   FORMAT: "&dYou successful updated default chat formatting!"
   GROUP-FORMAT: "&7You set chat formatting for &d'<group>'"
-chat:
-  MUTED: "&cYou are muted by &d'%mutedBy%'"
+  CHAT-TARGET:
+    MUTED: "&cYou are muted by &d'%mutedBy%'"

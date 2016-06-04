@@ -1,17 +1,15 @@
 name: xChat
 main: ru.undefined1.xChat.xChat
-version: "0.3b"
+version: "1.5"
 author: undefined1
 api: ["1.0.0"]
-softdepend: [LeetPerms, Multipass]
+softdepend: [CraftWallet, xClans, Multipass]
 
 commands:
   xChat:
     usage: "/xchat"
   mute:
     usage: "/mute <playername>"
-  unmute:
-    usage: "/unmute <playername>"
 
 permissions:
   xChat.*:
