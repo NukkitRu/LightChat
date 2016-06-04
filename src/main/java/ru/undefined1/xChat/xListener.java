@@ -57,7 +57,7 @@ public class xListener implements Listener {
 
         } else {
             String MutedBy = plugin.mute.getString("mutedBy." + e.getPlayer().getName());
-            String mute = plugin.getTranslation(TextFormat.colorize("chat.MUTED"));
+            String mute = plugin.getTranslation(TextFormat.colorize("messages.CHAT-TARGET"));
             e.getPlayer().sendMessage(TextFormat.colorize(mute).replaceAll("%mutedBy%", MutedBy));
             e.setCancelled(true);
         }
