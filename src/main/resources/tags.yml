@@ -1,7 +1,0 @@
-# xChat developed by impact #
-# Here you can edit player group name-tags #
-tags:
-  player:
-    admin: "&c[Admin]"
-  group:
-    default: "&7[Player]"

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="MadPerms">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/MadPerms.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/LeetPerms.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

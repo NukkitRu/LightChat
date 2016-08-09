@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="LightChat-0.1.1rc">
+    <output-path>$USER_HOME$/Desktop/Nukkit/plugins</output-path>
+    <root id="archive" name="LightChat-0.1.1rc.jar">
+      <element id="module-output" name="ru.undefined1.FastMessage" />
+    </root>
+  </artifact>
+</component>

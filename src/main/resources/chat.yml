@@ -1,19 +1,11 @@
-# xChat developed by impact #
+general:
+  # Available Tags: <message>, <player>, <world>, <level>, <prefix>
+  format: "&8[<prefix>&8] &7<player>&f: <message>"
+  # Customize chat formatting for other groups
+  custom-formatting:
+    admin: "&2[<prefix>&2] &c<player>&e: <message>"
 
-# Here you can customize player chat messages #
-# Available Tags: <message>, <player>, <time>, <world>, <level>, <prefix> #
-# If you have CraftWallet plugin on server, you can use <money> to get player balance #
-# If you have xClans plugin on server, you can use <clan> to get clan name #
-format: "&8[<prefix>&8] &7<player>&f: <message>"
+disabled-worlds:
+  - testWorld
 
-# Default player prefix, if plugin can't get prefix from Multipass or LeetPerms #
-default-prefix: "&2Player"
-
-###################
-# W.I.P FUNCTIONS #
-###################
-
-# Here you can make special chat formatting for different groups #
-# Available Tags: <message>, <player>, <time>, <world>, <level>, <prefix> #
-# Working only with Multipass #
-admins: "&2[<prefix>&2] &c<player>&e: <message>"
+# Developed by LightEye™, all rights reserved! #

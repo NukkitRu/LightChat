@@ -1,10 +1,11 @@
-# xChat developed by impact #
 # Here displayed the person who has muted the player #
-mutedBy:
+muted-players-data:
   Notch: "admin"
   Herobrine: "admin"
 
 # List of muted players #
-mutedPlayers:
+muted-players:
   - Notch
   - Herobrine
+
+# Developed by LightEye™, all rights reserved! #

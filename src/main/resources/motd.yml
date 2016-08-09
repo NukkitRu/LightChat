@@ -1,0 +1,8 @@
+general:
+  enabled: true
+  # You can use tags in this text lines
+  # Tags: <player>, <group>, <prefix>, <world>
+  motd-lines:
+  - "&7Welcome you &a[<prefix>] <player> &7on the server!"
+  - "&7Your group is &a<group>&7."
+  - "&7You are in &a<world>&7."
