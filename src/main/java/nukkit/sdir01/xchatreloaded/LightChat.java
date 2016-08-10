@@ -131,19 +131,16 @@ public class LightChat extends PluginBase implements cn.nukkit.event.Listener {
             Message.XCHAT_SUCCESS.log();
             getHookedWithPlugin = "LeetPerms";*/
 
-        // Disabled, because MadPerms and LeetPerms didn't have a methods to get player group, prefix and etc.
-        // Contact the MadPerms or LeetPerms developer if you want to see his plugin support here!
-
-        /*} else if(getServer().getPluginManager().getPlugin("MadPerms") != null) {
-            Message.HOOKED_WITH_PLUGIN.log( "MadPerms");
-            Message.XCHAT_SUCCESS.log();
-            getHookedWithPlugin = "MadPerms";
-        */
-
-        } else {
-            Message.NO_LOADED_PLUGINS.log('c');
-            Message.XCHAT_FAILED.log('c');
-            getServer().getPluginManager().disablePlugin(this);
-        }
+		} else if (getServer().getPluginManager().getPlugin("MadPerms") != null) {
+			Message.HOOKED_WITH_PLUGIN.log("MadPerms");
+			Message.XCHAT_SUCCESS.log();
+			getHookedWithPlugin = "MadPerms";
+		} else {
+	        // Disabled, because LeetPerms didn't have a methods to get player group, prefix and etc.
+	        // Contact the LeetPerms developer if you want to see his plugin support here!
+			Message.NO_LOADED_PLUGINS.log('c');
+			Message.XCHAT_FAILED.log('c');
+			getServer().getPluginManager().disablePlugin(this);
+		}
     }
 }
